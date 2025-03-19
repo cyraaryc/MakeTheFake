@@ -15,11 +15,11 @@ let config = {
     physics: {
         default: "arcade",
         arcade: {
-            debug: true
+            debug: false
         }
     },
     zoom: 2,
-    backgroundColor: '#a63a43',
+    backgroundColor: '#FFF',
     scene: [  MainMenu ,Controller, Overworld,],
 } 
 

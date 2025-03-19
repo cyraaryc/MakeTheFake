@@ -10,7 +10,19 @@ class MainMenu extends Phaser.Scene {
     }
     
       create() {
-        this.add.text(25,50, 'Press any key to start')
+        let menuConfig = {
+          fontFamily: 'test',
+          fontSize: '10px',
+          backgroundColor: '#FFFFFFF',
+          color: '#FFFFFF',
+          align: 'center',
+          padding: {
+          top: 5,
+          bottom: 5,
+          },
+          fixedWidth: 0
+      }      
+        this.add.text(25,50, 'Firestarter\nPress any key to start',menuConfig)
 
       const go = this.input.keyboard.on('keydown', function (event) {
         this.sound.play('boop')
