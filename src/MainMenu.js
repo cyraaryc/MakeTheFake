@@ -2,10 +2,24 @@ class MainMenu extends Phaser.Scene {
     constructor() {
         super('MenuScene');
     }
+    //used to load in stuff, mostly here for debugging
     preload(){
-        this.load.audio('boop', './assets/click.wav')
-        this.load.audio('blep', './assets/click2.wav')
 
+        this.load.path = './assets/';
+        this.load.spritesheet('slime', 'slime.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        this.load.image('T', 'greeniso2.png');
+        this.load.tilemapTiledJSON('T2', 'overworld3.json');
+        this.load.spritesheet('enemy', 'b1.png', {
+            frameWidth: 32,
+            frameHeight: 64
+
+        });
+        this.load.audio('boop', 'click.wav')
+        this.load.audio('blep', 'click2.wav')
+        this.load.audio('music', 'meimei.wav')
 
     }
     
@@ -24,10 +38,7 @@ class MainMenu extends Phaser.Scene {
       }      
         this.add.text(25,50, 'Firestarter\nPress any key to start',menuConfig)
 
-      const go = this.input.keyboard.on('keydown', function (event) {
-        this.sound.play('boop')
-        this.scene.start('controllerScene')     }, this);
-
+        this.scene.start('controllerScene')
 
 
 

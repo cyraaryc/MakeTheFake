@@ -4,30 +4,24 @@ class Overworld extends Phaser.Scene {
     }
 
     init() {
+        //basic stuff here
         this.TILE_SIZE = 32;
         this.MOVE_DELAY = 10;
         this.moving = false;
         this.score = 0;
         this.complete = false;
-        this.timer = 1000;
-    }
-
-    preload() {
-        this.load.path = './assets/';
-        this.load.spritesheet('slime', 'slime.png', {
-            frameWidth: 16,
-            frameHeight: 16
-        });
-        this.load.image('T', 'greeniso2.png');
-        this.load.tilemapTiledJSON('T2', 'overworld3.json');
-        this.load.spritesheet('enemy', 'b1.png', {
-            frameWidth: 32,
-            frameHeight: 64
-
-        });
+        this.timer = 3600;
     }
 
     create() {
+        this.loop;
+
+            
+        if (this.loop != 0){
+            this.music = this.sound.add('music', { volume: 0.5, loop: true});
+            this.music.play();
+            this.loop=0
+            }
         let menuConfig = {
             fontFamily: 'test',
             fontSize: '15px',
@@ -40,7 +34,7 @@ class Overworld extends Phaser.Scene {
             },
             fixedWidth: 0
         }      
-        this.cameras.main.setViewport(55, 60);
+        this.cameras.main.setViewport(50, 60);
         this.cameras.resize(160, 200);
 
         this.map = this.add.tilemap('T2');
@@ -48,11 +42,12 @@ class Overworld extends Phaser.Scene {
         const bglayer = this.map.createLayer('Tile Layer 1', tileset, 0, 0);
         bglayer.depth = 0;
         this.slime = this.physics.add.sprite(32, 32, 'slime', 0);
-        this.slime.play('j');
         let rect1 = this.add.rectangle(0, 0, 400, 40, 0x000).setScrollFactor(0).depth = 1999;
+        let rect2 = this.add.rectangle(0, 200, 400, 40, 0x000).setScrollFactor(0).depth = 1999;
+
         this.text1 = this.add.text(10, -4, 'SCORE : '+ this.score, menuConfig, { fontSize: '16px', backgroundColor: '#000', color: '#6e9463' }).setScrollFactor(0);
         this.text1.depth = 2000;
-        this.text2 = this.add.text(0, 226, (this.timer/60).toFixed(2), menuConfig, { fontSize: '8px', backgroundColor: '#000', color: '#6e9463' }).setScrollFactor(0);
+        this.text2 = this.add.text(0, 180, (this.timer/60).toFixed(2), menuConfig, { fontSize: '8px', backgroundColor: '#000', color: '#6e9463' }).setScrollFactor(0);
         this.text2.depth = 2000;
 
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -63,10 +58,14 @@ class Overworld extends Phaser.Scene {
 
     }
     update(){
+
+
         this.timer--
         this.text2.setText((this.timer/60).toFixed(2)).depth = 2000;       
-        if (this.timer == 0){
-            this.scene.start('overworldScene')
+        if (this.timer == 0){ 
+            this.music.stop()
+            this.loop = 1;
+            this.scene.start('GMenuScene')
         }
 
         this.spawnEnemies(1); 
